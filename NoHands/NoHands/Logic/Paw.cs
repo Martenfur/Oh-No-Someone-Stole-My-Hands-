@@ -27,6 +27,7 @@ namespace NoHands.Logic
 		float _startingDistance;
 		double _stepAngle;
 		double _maxStepAngle = 45;
+		float _stepSpd = 270; // deg/s
 
 		public int Inversion = 1; 
 
@@ -40,10 +41,20 @@ namespace NoHands.Logic
 		{
 			if (CurrentState == State.Stepping)
 			{
-				_stepAngle += GameCntrl.Time(270) * Inversion;
+				var stepAnglePrev = _stepAngle;
+				var posPrev = Position;
+
+				_stepAngle += GameCntrl.Time(_stepSpd) * Inversion;
 				var deg = MathHelper.ToRadians((float)(_startingAngle + _stepAngle));
 				Position = Pair.Position + new Vector2((float)Math.Cos(deg), -(float)Math.Sin(deg)) * _startingDistance;
 				
+				/*
+				if (CheckCollision())
+				{
+					Position = posPrev;
+					_stepAngle = stepAnglePrev;
+				}
+				*/
 			}
 
 
@@ -70,6 +81,21 @@ namespace NoHands.Logic
 		{
 			CurrentState = State.Resting;
 			_stepAngle = 0;
+		}
+
+		bool CheckCollision()
+		{
+			var solids = Objects.GetList<Solid>();
+
+			foreach(var solid in solids)
+			{
+				if (GameMath.RectangleInRectangle(Position, Position + Vector2.One, solid.Position, solid.Position + solid.Size))
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 		
 

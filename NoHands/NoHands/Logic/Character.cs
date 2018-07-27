@@ -5,12 +5,14 @@ using Resources;
 using Resources.Sprites;
 using Microsoft.Xna.Framework;
 using Monofoxe.Utils;
+using System.Collections.Generic;
 
 namespace NoHands.Logic
 {
 	public class Character : GameObj
 	{
 		public Vector2 Position;
+		public Vector2 Size = new Vector2(32, 32);
 
 		Buttons _leftPawButton = Buttons.A;
 		Buttons _rightPawButton = Buttons.D;
@@ -56,13 +58,24 @@ namespace NoHands.Logic
 				RightPaw.StopStep();
 			}
 
+			if (Input.CheckButton(_backButton))
+			{
+				LeftPaw.Inversion = -1;
+				RightPaw.Inversion = 1;
+			}
+			else
+			{
+				LeftPaw.Inversion = 1;
+				RightPaw.Inversion = -1;
+			}
+
 			FacingDirection = GameMath.Direction(RightPaw.Position, LeftPaw.Position) + 90;
 			if (FacingDirection >= 360)
 			{
 				FacingDirection -= 360;
 			}
 
-			Position = (LeftPaw.Position + RightPaw.Position) / 2f;
+			Move((LeftPaw.Position + RightPaw.Position) / 2f);
 			Depth = -(int)Position.Y;
 		}
 
@@ -96,6 +109,70 @@ namespace NoHands.Logic
 			DrawCntrl.CurrentFont = Fonts.Arial;
 			//DrawCntrl.DrawText(ratio.ToString(), 32, 32);
 		}
+
+		void Move(Vector2 newPos)
+		{
+			var delta = newPos - Position;
+
+			var solids = Objects.GetList<Solid>();
+
+			var resDelta = Vector2.Zero;
+
+			if (CheckCollision(Position + Vector2.UnitX * delta.X, solids))
+			{
+				var sign = Math.Sign(delta.X);
+				for(var i = 0; i < delta.X; i += 1)
+				{
+					if (!CheckCollision(Position + Vector2.UnitX * i * sign, solids))
+					{
+						resDelta.X = i * sign;
+						break;
+					}
+				}
+			}
+			else
+			{
+				resDelta.X = delta.X;
+			}
+
+
+			if (CheckCollision(Position + Vector2.UnitY * delta.Y, solids))
+			{
+				var sign = Math.Sign(delta.Y);
+				for(var i = 0; i < delta.Y; i += 1)
+				{
+					if (!CheckCollision(Position + Vector2.UnitY * i * sign, solids))
+					{
+						resDelta.Y = i * sign;
+						break;
+					}
+				}
+			}
+			else
+			{
+				resDelta.Y = delta.Y;
+			}
+			
+			Position += resDelta;
+			LeftPaw.Position += -(delta - resDelta);
+			RightPaw.Position += -(delta - resDelta);
+
+
+		}
+
+		bool CheckCollision(Vector2 pos, List<Solid> solids)
+		{
+			foreach(var solid in solids)
+			{
+				if (GameMath.RectangleInRectangle(pos - Size / 2, pos + Size / 2, solid.Position, solid.Position + solid.Size))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+		
 		
 	}
 }
