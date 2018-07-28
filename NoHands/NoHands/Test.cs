@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Resources.Sprites;
 using NoHands.Logic;
+using System;
 
 namespace NoHands
 {
@@ -16,7 +17,7 @@ namespace NoHands
 			GameCntrl.MaxGameSpeed = 60;
 			
 			cam.BackgroundColor = new Color(64, 32, 32);
-			DrawCntrl.BlendState = BlendState.AlphaBlend;
+			DrawCntrl.BlendState = BlendState.NonPremultiplied;
 
 			GameCntrl.WindowManager.CanvasSize = new Vector2(800, 600);
 			GameCntrl.WindowManager.Window.AllowUserResizing = false;
@@ -43,6 +44,9 @@ namespace NoHands
 			DrawCntrl.DrawCircle(120, 100, 100, false);
 			DrawCntrl.CurrentColor = Color.White;
 		}
+
+		public static Vector2 RoundVector2(Vector2 vec) =>
+			new Vector2((float)Math.Round(vec.X), (float)Math.Round(vec.Y));
 
 	}
 }

@@ -11,8 +11,10 @@ namespace NoHands.Logic
 	public class Paw : GameObj
 	{
 		public Vector2 Position;
+		public float Z;
 
 		public Paw Pair;
+		public Character Owner;
 
 		public enum State
 		{
@@ -31,10 +33,12 @@ namespace NoHands.Logic
 
 		public int Inversion = 1; 
 
+		public float ZRubberBand = 3f;
 		
-		public Paw(Vector2 pos)
+		public Paw(Vector2 pos, Character owner)
 		{
 			Position = pos;
+			Owner = owner;
 		}
 
 		public override void Update()
@@ -47,16 +51,19 @@ namespace NoHands.Logic
 				_stepAngle += GameCntrl.Time(_stepSpd) * Inversion;
 				var deg = MathHelper.ToRadians((float)(_startingAngle + _stepAngle));
 				Position = Pair.Position + new Vector2((float)Math.Cos(deg), -(float)Math.Sin(deg)) * _startingDistance;
-				
-				/*
-				if (CheckCollision())
-				{
-					Position = posPrev;
-					_stepAngle = stepAnglePrev;
-				}
-				*/
+			}
+	
+			if (CurrentState == State.Jumping && Z == 0)
+			{
+				new Pawprint(Position);
 			}
 
+
+			Z += (Owner.Z - Z) / ZRubberBand;
+			if (CurrentState != State.Jumping && Math.Abs(Owner.Z - Z) < 1)
+			{
+				Z = 0;
+			}
 
 			Depth = -(int)Position.Y;
 		}
@@ -64,7 +71,7 @@ namespace NoHands.Logic
 		
 		public override void Draw()
 		{
-			DrawCntrl.DrawSprite(SpritesDefault.FoxPaw, Position);
+			DrawCntrl.DrawSprite(SpritesDefault.FoxPaw, Test.RoundVector2(Position - Vector2.UnitY * Z));
 		}
 
 		public void StartStep()
@@ -74,6 +81,7 @@ namespace NoHands.Logic
 				CurrentState = State.Stepping;
 				_startingAngle = GameMath.Direction(Pair.Position, Position);
 				_startingDistance = GameMath.Distance(Pair.Position, Position);
+				new Pawprint(Position);
 			}
 		}
 		
@@ -82,22 +90,6 @@ namespace NoHands.Logic
 			CurrentState = State.Resting;
 			_stepAngle = 0;
 		}
-
-		bool CheckCollision()
-		{
-			var solids = Objects.GetList<Solid>();
-
-			foreach(var solid in solids)
-			{
-				if (GameMath.RectangleInRectangle(Position, Position + Vector2.One, solid.Position, solid.Position + solid.Size))
-				{
-					return true;
-				}
-			}
-
-			return false;
-		}
-		
 
 	}
 }

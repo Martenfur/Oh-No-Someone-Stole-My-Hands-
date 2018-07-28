@@ -17,6 +17,8 @@ namespace NoHands.Logic
 		Buttons _leftPawButton = Buttons.A;
 		Buttons _rightPawButton = Buttons.D;
 		Buttons _backButton = Buttons.S;
+		Buttons _jumpButton = Buttons.Space;
+
 
 		public Paw LeftPaw, RightPaw;
 
@@ -29,11 +31,23 @@ namespace NoHands.Logic
 
 		float _faceOffsetMax = 10;
 
+		Alarm _jumpCharge = new Alarm();
+		float _jumpChargeTime = 0.25f;
+		bool _jumpChargeReady = false;
+		float _jumpChargeZ;
+		float _jumpChargeZMax = 4;
+
+		public float Z;
+		public float Zspd;
+		public float Gravity = 1000;
+
 		public Character(Vector2 pos)
 		{
+
 			Position = pos;
-			LeftPaw = new Paw(Position - Vector2.UnitX * _pawRadius);
-			RightPaw = new Paw(Position + Vector2.UnitX * _pawRadius);
+			LeftPaw = new Paw(Position - Vector2.UnitX * _pawRadius, this);
+			LeftPaw.ZRubberBand = 2;
+			RightPaw = new Paw(Position + Vector2.UnitX * _pawRadius, this);
 			LeftPaw.Pair = RightPaw;
 			RightPaw.Pair = LeftPaw;
 			RightPaw.Inversion = -1;
@@ -41,6 +55,7 @@ namespace NoHands.Logic
 
 		public override void Update()
 		{
+			#region Movement controls.
 			if (Input.CheckButton(_leftPawButton))
 			{
 				LeftPaw.StartStep();
@@ -68,7 +83,36 @@ namespace NoHands.Logic
 				LeftPaw.Inversion = 1;
 				RightPaw.Inversion = -1;
 			}
+			#endregion Movement controls.
 
+			// Jump.
+			if (Input.CheckButton(_jumpButton))
+			{
+				LeftPaw.StopStep();
+				RightPaw.StopStep();
+
+				if (!_jumpChargeReady && !_jumpCharge.Active)
+				{
+					_jumpCharge.Set(_jumpChargeTime);
+				}
+
+				if (_jumpCharge.Update())
+				{
+					_jumpChargeReady = true;
+				}
+			}
+			else
+			{
+				if (_jumpChargeReady)
+				{
+					Zspd = 300;
+				}
+				_jumpChargeReady = false;
+				_jumpCharge.Reset();
+			}
+			// Jump.
+
+			
 			FacingDirection = GameMath.Direction(RightPaw.Position, LeftPaw.Position) + 90;
 			if (FacingDirection >= 360)
 			{
@@ -77,17 +121,56 @@ namespace NoHands.Logic
 
 			Move((LeftPaw.Position + RightPaw.Position) / 2f);
 			Depth = -(int)Position.Y;
+
+
+			Zspd -= (float)GameCntrl.Time(Gravity);
+			Z += (float)GameCntrl.Time(Zspd);
+			if (Z < 0)
+			{
+				Z = 0;
+				Zspd = 0;
+			}
+
+			if (Z > 0)
+			{
+				LeftPaw.CurrentState = Paw.State.Jumping;
+				RightPaw.CurrentState = Paw.State.Jumping;
+			}
+			else
+			{
+				if (LeftPaw.CurrentState == Paw.State.Jumping)
+				{
+					LeftPaw.CurrentState = Paw.State.Resting;
+				}
+				if (RightPaw.CurrentState == Paw.State.Jumping)
+				{
+					RightPaw.CurrentState = Paw.State.Resting;
+				}
+			}
+
+			if (_jumpCharge.Active || _jumpChargeReady)
+			{
+				_jumpChargeZ = -(float)Math.Sqrt(1 - _jumpCharge.Counter / _jumpChargeTime) * _jumpChargeZMax;
+			}
+			else
+			{
+				_jumpChargeZ = _jumpChargeZ / 2f;
+			}
+
 		}
+
 
 		
 		public override void Draw()
 		{
+			var resPos = Position + _bodyOffset - Vector2.UnitY * (Z + _jumpChargeZ);
+			
 			var frame = 0;
-			if (FacingDirection > 90 - 90 && FacingDirection < 90 + 90)
+			if (FacingDirection > 0 && FacingDirection < 180)
 			{
 				frame = 1;
 			}
-			DrawCntrl.DrawSprite(SpritesDefault.FoxBody, frame, Position + _bodyOffset);
+			DrawCntrl.DrawSprite(SpritesDefault.FoxBody, frame, Test.RoundVector2(resPos));
 
 			if (frame == 0)
 			{
@@ -102,13 +185,12 @@ namespace NoHands.Logic
 					ratio = -1;
 				}
 
-				DrawCntrl.DrawSprite(SpritesDefault.FoxFace, Position + _bodyOffset + _facePos + Vector2.UnitX * _faceOffsetMax * ratio);
+				DrawCntrl.DrawSprite(SpritesDefault.FoxFace, Test.RoundVector2(resPos + _facePos + Vector2.UnitX * _faceOffsetMax * ratio));
 			}
 
-			
-			DrawCntrl.CurrentFont = Fonts.Arial;
-			//DrawCntrl.DrawText(ratio.ToString(), 32, 32);
 		}
+
+
 
 		void Move(Vector2 newPos)
 		{
@@ -159,6 +241,8 @@ namespace NoHands.Logic
 
 
 		}
+
+
 
 		bool CheckCollision(Vector2 pos, List<Solid> solids)
 		{

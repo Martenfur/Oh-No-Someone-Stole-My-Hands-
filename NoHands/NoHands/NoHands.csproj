@@ -45,6 +45,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Logic\Character.cs" />
     <Compile Include="Logic\Paw.cs" />
+    <Compile Include="Logic\Pawprint.cs" />
     <Compile Include="Logic\Solid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
