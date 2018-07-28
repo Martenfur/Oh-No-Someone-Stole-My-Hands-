@@ -26,6 +26,8 @@ namespace NoHands
 			GameCntrl.WindowManager.CanvasMode = CanvasMode.Fill;
 			
 			new Character(new Vector2(200, 200));
+			
+			new Enemy(new Vector2(200, 200));
 		}
 		
 		public override void Update()
@@ -34,6 +36,7 @@ namespace NoHands
 			{
 				new Solid(Input.MousePos, new Vector2(48, 48));
 			}
+
 		}
 
 		
