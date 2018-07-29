@@ -47,6 +47,8 @@
     <Compile Include="Logic\Enemy.cs" />
     <Compile Include="Logic\Paw.cs" />
     <Compile Include="Logic\Pawprint.cs" />
+    <Compile Include="Logic\PawTrail.cs" />
+    <Compile Include="Logic\Scene.cs" />
     <Compile Include="Logic\Solid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

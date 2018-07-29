@@ -6,7 +6,7 @@
 	classOutputDir: "/../Resources/Sprites/", // Relative to content project file.
 	singleTexturesWildcards: 
 	[
-		"/Textures/*"
+		"/Maps/*"
 	],
 	
 	debugMode: "false"

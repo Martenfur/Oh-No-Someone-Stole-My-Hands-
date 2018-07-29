@@ -41,3 +41,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Arial.spritefont
 
+#begin Audio/Sounds/step.wav
+/copy:Audio/Sounds/step.wav
+

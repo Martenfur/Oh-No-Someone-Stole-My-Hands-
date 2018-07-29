@@ -25,9 +25,15 @@ namespace NoHands
 			GameCntrl.WindowManager.CenterWindow();
 			GameCntrl.WindowManager.CanvasMode = CanvasMode.Fill;
 			
-			new Character(new Vector2(200, 200));
+			//new Character(new Vector2(0, 0));
 			
-			new Enemy(new Vector2(200, 200));
+			//new Enemy(new Vector2(200, 200));
+
+			new Scene(SpritesDefault.TestMap);
+
+			Resources.Sounds.Load();
+
+
 		}
 		
 		public override void Update()
@@ -42,10 +48,6 @@ namespace NoHands
 		
 		public override void Draw()
 		{
-			DrawCntrl.CurrentColor = new Color(Color.Azure, 0.1f);
-			DrawCntrl.DrawCircle(100, 100, 100, false);
-			DrawCntrl.DrawCircle(120, 100, 100, false);
-			DrawCntrl.CurrentColor = Color.White;
 		}
 
 		public static Vector2 RoundVector2(Vector2 vec) =>

@@ -41,6 +41,8 @@ namespace NoHands.Logic
 		public float Zspd;
 		public float Gravity = 1000;
 
+		public PawTrail PawTrail = new PawTrail();
+
 		public Character(Vector2 pos)
 		{
 
@@ -113,6 +115,9 @@ namespace NoHands.Logic
 			// Jump.
 
 			
+			PawTrail.Update();
+
+
 			FacingDirection = GameMath.Direction(RightPaw.Position, LeftPaw.Position) + 90;
 			if (FacingDirection >= 360)
 			{

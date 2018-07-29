@@ -5,6 +5,7 @@ using Resources;
 using Resources.Sprites;
 using Microsoft.Xna.Framework;
 using Monofoxe.Utils;
+using Monofoxe.Engine.Audio;
 
 namespace NoHands.Logic
 {
@@ -55,7 +56,7 @@ namespace NoHands.Logic
 	
 			if (CurrentState == State.Jumping && Z == 0)
 			{
-				new Pawprint(Position);
+				Owner.PawTrail.AddPawprint(Position);
 			}
 
 
@@ -81,7 +82,7 @@ namespace NoHands.Logic
 				CurrentState = State.Stepping;
 				_startingAngle = GameMath.Direction(Pair.Position, Position);
 				_startingDistance = GameMath.Distance(Pair.Position, Position);
-				new Pawprint(Position);
+				Owner.PawTrail.AddPawprint(Position);
 			}
 		}
 		
@@ -89,6 +90,8 @@ namespace NoHands.Logic
 		{
 			CurrentState = State.Resting;
 			_stepAngle = 0;
+			//var snd = AudioMgr.PlaySound(Sounds.Step);
+			//snd.Loops = 0;
 		}
 
 	}

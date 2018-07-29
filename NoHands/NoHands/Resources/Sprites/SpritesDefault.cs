@@ -21,6 +21,7 @@ namespace Resources.Sprites
 		public static Sprite FoxBody;
 		public static Sprite FoxFace;
 		public static Sprite FoxPaw;
+		public static Sprite TestMap;
 		#endregion Sprites.
 		
 		private static string _groupName = "Default";
@@ -39,6 +40,7 @@ namespace Resources.Sprites
 			FoxBody = sprites["FoxBody"];
 			FoxFace = sprites["FoxFace"];
 			FoxPaw = sprites["FoxPaw"];
+			TestMap = sprites["Maps/TestMap"];
 			
 			#endregion Sprite constructors.
 		}
