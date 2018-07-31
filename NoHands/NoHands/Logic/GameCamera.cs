@@ -21,9 +21,9 @@ namespace NoHands.Logic
 
 		public override void Draw()
 		{
-			DrawCntrl.CurrentColor = Color.Black;
-			DrawCntrl.DrawCircle(Position, 8, false);
-			DrawCntrl.CurrentColor = Color.White;
+			//DrawCntrl.CurrentColor = Color.Black;
+			//DrawCntrl.DrawCircle(Position, 8, false);
+			//DrawCntrl.CurrentColor = Color.White;
 		}
 
 	}

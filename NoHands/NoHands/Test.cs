@@ -8,10 +8,10 @@ using System;
 
 namespace NoHands
 {
-	class Test : GameObj 
+	public class Test : GameObj 
 	{
 		Camera cam = new Camera(800, 600);
-		Scene scene;
+		public static Scene CurrentScene;
 
 		public Test()
 		{
@@ -30,11 +30,9 @@ namespace NoHands
 			
 			cam.Offset = cam.Size / 2;
 
-			scene = new Scene(SpritesDefault.TestMap);
+			CurrentScene = new Scene(SpritesDefault.TestMap);
 
 			Resources.Sounds.Load();
-
-
 		}
 		
 		public override void Update()
@@ -45,7 +43,7 @@ namespace NoHands
 		
 		public override void DrawBegin()
 		{
-			scene.DrawTileMap();
+			CurrentScene.DrawTileMap();
 		}
 
 		public static Vector2 RoundVector2(Vector2 vec) =>

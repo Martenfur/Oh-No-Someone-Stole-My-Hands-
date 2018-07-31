@@ -13,7 +13,7 @@ namespace NoHands.Logic
 {
 	public class Scene
 	{
-		public static int CellSize = 64;
+		public const int CellSize = 64;
 
 		public Sprite map;
 
@@ -68,7 +68,7 @@ namespace NoHands.Logic
 					if (CheckValue(_skyBorder, color))
 					{
 						new Solid(new Vector2(x, y) * CellSize, Vector2.One * CellSize);
-						TileMap[x, y] = 1;
+						TileMap[x, y] = 0;
 					}
 					if (CheckValue(_npc, color))
 					{

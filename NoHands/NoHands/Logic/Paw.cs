@@ -58,7 +58,7 @@ namespace NoHands.Logic
 	
 			if (CurrentState == State.Jumping && Z == 0)
 			{
-				Owner.PawTrail.AddPawprint(Position);
+				Owner.PawTrail.AddPawprint(Position, (float)Owner.FacingDirection);
 			}
 
 
@@ -84,7 +84,7 @@ namespace NoHands.Logic
 				CurrentState = State.Stepping;
 				_startingAngle = GameMath.Direction(Pair.Position, Position);
 				_startingDistance = GameMath.Distance(Pair.Position, Position);
-				Owner.PawTrail.AddPawprint(Position);
+				Owner.PawTrail.AddPawprint(Position, (float)Owner.FacingDirection + 45 * Inversion);
 			}
 		}
 		

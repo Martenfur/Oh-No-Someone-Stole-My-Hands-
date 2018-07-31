@@ -15,9 +15,12 @@ namespace NoHands.Logic
 		Alarm _life = new Alarm();
 		float _lifetime = 5;
 
-		public Pawprint(Vector2 pos)
+		float Dir;
+
+		public Pawprint(Vector2 pos, float dir)
 		{
 			Position = pos;
+			Dir = dir;
 			_life.Set(_lifetime);
 		}
 
@@ -27,15 +30,26 @@ namespace NoHands.Logic
 			{
 				Objects.Destroy(this);
 			}
+
+			
+			int x = (int)Position.X / Scene.CellSize;
+			int y = (int)Position.Y / Scene.CellSize;
+
+
+			if (Test.CurrentScene.TileMap[x, y] == 2)
+			{
+				Objects.Destroy(this);
+			}
 		}
 
 		
 		public override void Draw()
-		{
-			//DrawCntrl.DrawSprite(SpritesDefault.FoxPaw, Test.RoundVector2(Position));
-			DrawCntrl.CurrentColor = new Color(Color.White, (float)_life.Counter / _lifetime);
-			DrawCntrl.DrawCircle(Test.RoundVector2(Position), 4, false);
-			DrawCntrl.CurrentColor = Color.White;
+		{		
+			if (!Destroyed)
+			{
+				var c = new Color(Color.White, (float)_life.Counter / _lifetime);
+				DrawCntrl.DrawSprite(SpritesDefault.Pawprint, 0, Test.RoundVector2(Position), Vector2.One, -Dir, c);
+			}
 		}
 	}
 }

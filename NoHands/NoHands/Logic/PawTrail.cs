@@ -19,9 +19,9 @@ namespace NoHands.Logic
 			}
 		}
 
-		public void AddPawprint(Vector2 pos)
+		public void AddPawprint(Vector2 pos, float dir)
 		{
-			Pawprints.Insert(0, new Pawprint(pos));
+			Pawprints.Insert(0, new Pawprint(pos, dir));
 		}
 
 	}

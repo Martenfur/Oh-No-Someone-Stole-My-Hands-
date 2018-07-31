@@ -16,6 +16,7 @@ namespace NoHands.Logic
 			Patroling,
 			Alarmed,
 			Pursuing,
+			Resting,
 		}
 		public State CurrentState = State.Patroling;
 
@@ -40,6 +41,10 @@ namespace NoHands.Logic
 		Alarm _pursuingDelayAlarm = new Alarm();
 		float _pursuingDelay = 1;
 
+		Vector2 _origPos;
+
+		Alarm _restingAlarm = new Alarm();
+		float _restingTime = 5;
 
 		public Enemy(Vector2 pos, List<Vector2> path)
 		{
@@ -70,7 +75,7 @@ namespace NoHands.Logic
 				if (_pawprint.Update())
 				{
 					var normVec = new Vector2(vec.Y * _inverse, -vec.X * _inverse) * _stepWidth;
-					PawTrail.AddPawprint(Position + normVec);
+					PawTrail.AddPawprint(Position + normVec, (float)GameMath.Direction(vec));
 					_inverse *= -1;
 				}
 
@@ -107,6 +112,7 @@ namespace NoHands.Logic
 					if (!_tracedPawprint.Destroyed)
 					{
 						CurrentState = State.Pursuing;
+						_origPos = Position;
 						Position = _tracedPawprint.Position;
 					}
 					else
@@ -153,6 +159,24 @@ namespace NoHands.Logic
 						_tracedPawprint = null;
 						CurrentState = State.Patroling;
 					}
+
+					if (GameMath.Distance(Position, player.Position) < _detectionRadius)
+					{
+						Console.WriteLine("KILLED!");
+
+						Position = _origPos;
+						CurrentState = State.Resting;
+						_restingAlarm.Set(_restingTime);
+					}
+				}
+
+			}
+			
+			if (CurrentState == State.Resting)
+			{
+				if (_restingAlarm.Update())
+				{
+					CurrentState = State.Patroling;
 				}
 			}
 			
@@ -164,14 +188,15 @@ namespace NoHands.Logic
 			
 			DrawCntrl.CurrentColor = Color.Red;
 
-			//if (CurrentState == State.Pursuing)
+			if (CurrentState == State.Pursuing)
 				DrawCntrl.DrawCircle(Test.RoundVector2(Position), 8, false);
 			
+			/*
 			foreach(Vector2 pt in _patrolPoints)
 			{
 				DrawCntrl.DrawCircle(pt, 2, false);
 			}
-			
+			*/
 			DrawCntrl.CurrentColor = Color.White;
 
 
