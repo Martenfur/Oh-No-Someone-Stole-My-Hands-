@@ -9,18 +9,13 @@ using System.Collections.Generic;
 
 namespace NoHands.Logic
 {
-	public class Character : GameObj
+	public class Character : Actor
 	{
-		public Vector2 Position;
 		public Vector2 Size = new Vector2(32, 32);
 
-		Buttons _leftPawButton = Buttons.A;
-		Buttons _rightPawButton = Buttons.D;
-		Buttons _backButton = Buttons.S;
-		Buttons _jumpButton = Buttons.Space;
-
-
 		public Paw LeftPaw, RightPaw;
+
+		public Sprite BodySprite, FaceSprite;
 
 		private int _pawRadius = 14;
 
@@ -43,55 +38,26 @@ namespace NoHands.Logic
 
 		public PawTrail PawTrail = new PawTrail();
 
-		public Character(Vector2 pos)
-		{
+		protected bool _movingLeftPaw, _movingRightPaw, _chargingJump;
 
+		public Character(Vector2 pos, Sprite bodySprite,Sprite faceSprite)
+		{
 			Position = pos;
-			LeftPaw = new Paw(Position - Vector2.UnitX * _pawRadius, this);
+			BodySprite = bodySprite;
+			FaceSprite = faceSprite;
+
+			LeftPaw = new Paw(Position - Vector2.UnitX * _pawRadius, this, SpritesDefault.FoxPaw);
 			LeftPaw.ZRubberBand = 2;
-			RightPaw = new Paw(Position + Vector2.UnitX * _pawRadius, this);
+			RightPaw = new Paw(Position + Vector2.UnitX * _pawRadius, this, SpritesDefault.FoxPaw);
 			LeftPaw.Pair = RightPaw;
 			RightPaw.Pair = LeftPaw;
 			RightPaw.Inversion = -1;
-
-			var cam = new GameCamera();
-			cam.Viewer = this;
 		}
 
 		public override void Update()
 		{
-			#region Movement controls.
-			if (Input.CheckButton(_leftPawButton))
-			{
-				LeftPaw.StartStep();
-			}
-			if (Input.CheckButtonRelease(_leftPawButton))
-			{
-				LeftPaw.StopStep();
-			}
-			if (Input.CheckButton(_rightPawButton))
-			{
-				RightPaw.StartStep();
-			}
-			if (Input.CheckButtonRelease(_rightPawButton))
-			{
-				RightPaw.StopStep();
-			}
-
-			if (Input.CheckButton(_backButton))
-			{
-				LeftPaw.Inversion = -1;
-				RightPaw.Inversion = 1;
-			}
-			else
-			{
-				LeftPaw.Inversion = 1;
-				RightPaw.Inversion = -1;
-			}
-			#endregion Movement controls.
-
 			// Jump.
-			if (Input.CheckButton(_jumpButton))
+			if (_chargingJump)
 			{
 				LeftPaw.StopStep();
 				RightPaw.StopStep();
@@ -178,7 +144,7 @@ namespace NoHands.Logic
 			{
 				frame = 1;
 			}
-			DrawCntrl.DrawSprite(SpritesDefault.FoxBody, frame, Test.RoundVector2(resPos));
+			DrawCntrl.DrawSprite(BodySprite, frame, Test.RoundVector2(resPos));
 
 			if (frame == 0)
 			{
@@ -193,11 +159,20 @@ namespace NoHands.Logic
 					ratio = -1;
 				}
 
-				DrawCntrl.DrawSprite(SpritesDefault.FoxFace, Test.RoundVector2(resPos + _facePos + Vector2.UnitX * _faceOffsetMax * ratio));
+				DrawCntrl.DrawSprite(FaceSprite, Test.RoundVector2(resPos + _facePos + Vector2.UnitX * _faceOffsetMax * ratio));
 			}
 
 		}
 
+		public void LookAtPoint(Vector2 point)
+		{
+			var v = point - Position;
+			var vRot = new Vector2(-v.Y, v.X);
+			vRot.Normalize();
+
+			LeftPaw.Position = Position + vRot * _pawRadius;
+			RightPaw.Position = Position - vRot * _pawRadius;
+		}
 
 
 		void Move(Vector2 newPos)

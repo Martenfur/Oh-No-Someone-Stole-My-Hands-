@@ -9,7 +9,7 @@ namespace NoHands.Logic
 	public class GameCamera : GameObj
 	{
 		public Vector2 Position;
-		public Character Viewer;
+		public Actor Viewer;
 		
 		
 		public override void Update()

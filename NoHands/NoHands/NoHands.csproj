@@ -43,14 +43,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
-    <Compile Include="Logic\Character.cs" />
-    <Compile Include="Logic\Enemy.cs" />
+    <Compile Include="Logic\Actors\Actor.cs" />
+    <Compile Include="Logic\Actors\Character.cs" />
+    <Compile Include="Logic\Actors\Enemy.cs" />
+    <Compile Include="Logic\Actors\NPC.cs" />
     <Compile Include="Logic\GameCamera.cs" />
     <Compile Include="Logic\Paw.cs" />
     <Compile Include="Logic\Pawprint.cs" />
     <Compile Include="Logic\PawTrail.cs" />
+    <Compile Include="Logic\Actors\Player.cs" />
     <Compile Include="Logic\Scene.cs" />
-    <Compile Include="Logic\Solid.cs" />
+    <Compile Include="Logic\Actors\Solid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Effects.cs" />

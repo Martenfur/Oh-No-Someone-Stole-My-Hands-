@@ -16,9 +16,11 @@ namespace NoHands
 		public Test()
 		{
 			GameCntrl.MaxGameSpeed = 60;
+			DrawCntrl.Sampler = SamplerState.PointClamp;
 			
 			cam.BackgroundColor = Color.AliceBlue;
 			DrawCntrl.BlendState = BlendState.NonPremultiplied;
+
 
 			GameCntrl.WindowManager.CanvasSize = new Vector2(800, 600);
 			GameCntrl.WindowManager.Window.AllowUserResizing = false;

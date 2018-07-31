@@ -8,9 +8,8 @@ using Monofoxe.Utils;
 
 namespace NoHands.Logic
 {
-	public class Solid : GameObj
+	public class Solid : Actor
 	{
-		public Vector2 Position;
 		public Vector2 Size;
 		public Sprite Sprite;
 

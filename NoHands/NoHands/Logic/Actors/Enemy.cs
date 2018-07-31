@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace NoHands.Logic
 {
-	public class Enemy : GameObj
+	public class Enemy : Actor
 	{
 		public enum State
 		{
@@ -19,8 +19,6 @@ namespace NoHands.Logic
 		}
 		public State CurrentState = State.Patroling;
 
-		public Vector2 Position;
-		
 		List<Vector2> _patrolPoints = new List<Vector2>();
 		int _currentPointIndex = 0;
 
@@ -47,16 +45,6 @@ namespace NoHands.Logic
 		{
 			Position = pos;
 			_patrolPoints = path;
-
-			// Debug.
-			/*
-			_patrolPoints.Add(Position + new Vector2(100, 100));
-			_patrolPoints.Add(Position + new Vector2(100, -100));
-			_patrolPoints.Add(Position + new Vector2(-100, -100));
-			_patrolPoints.Add(Position + new Vector2(-100, 100));
-			*/
-			Console.WriteLine(path[0]);
-
 		}
 
 		public override void Update()
@@ -87,7 +75,7 @@ namespace NoHands.Logic
 				}
 
 				// Checking for player's trail.
-				var player = Objects.ObjFind<Character>(0);
+				var player = Objects.ObjFind<Player>(0);
 
 				if (player != null)
 				{
@@ -133,7 +121,7 @@ namespace NoHands.Logic
 			{
 				if (_pursuingAlarm.Update())
 				{
-					var player = Objects.ObjFind<Character>(0);
+					var player = Objects.ObjFind<Player>(0);
 
 					var lostTrail = false;
 

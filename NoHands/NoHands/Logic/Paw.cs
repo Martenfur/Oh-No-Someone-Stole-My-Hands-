@@ -14,6 +14,8 @@ namespace NoHands.Logic
 		public Vector2 Position;
 		public float Z;
 
+		public Sprite Sprite;
+
 		public Paw Pair;
 		public Character Owner;
 
@@ -29,17 +31,17 @@ namespace NoHands.Logic
 		double _startingAngle;
 		float _startingDistance;
 		double _stepAngle;
-		double _maxStepAngle = 45;
 		float _stepSpd = 315; // deg/s
 
 		public int Inversion = 1; 
 
 		public float ZRubberBand = 3f;
 		
-		public Paw(Vector2 pos, Character owner)
+		public Paw(Vector2 pos, Character owner, Sprite sprite)
 		{
 			Position = pos;
 			Owner = owner;
+			Sprite = sprite;
 		}
 
 		public override void Update()
@@ -72,7 +74,7 @@ namespace NoHands.Logic
 		
 		public override void Draw()
 		{
-			DrawCntrl.DrawSprite(SpritesDefault.FoxPaw, Test.RoundVector2(Position - Vector2.UnitY * Z));
+			DrawCntrl.DrawSprite(Sprite, Test.RoundVector2(Position - Vector2.UnitY * Z));
 		}
 
 		public void StartStep()

@@ -13,11 +13,11 @@ namespace NoHands.Logic
 {
 	public class Scene
 	{
-		public static int CellSize = 96;
+		public static int CellSize = 64;
 
 		public Sprite map;
 
-		public bool[,] TileMap;
+		public int[,] TileMap;
 
 		byte[] _wall = {0, 0};
 		byte[] _player = {255, 106};
@@ -25,6 +25,8 @@ namespace NoHands.Logic
 		byte[] _enemyPath = {128, 0};
 		byte[] _sky = {32, 64};
 		byte[] _skyBorder = {32, 0};
+		byte[] _npc = {33, 255};
+		byte[] _paintedTile = {178, 0};
 		
 
 		public Scene(Sprite map)
@@ -33,13 +35,13 @@ namespace NoHands.Logic
 			var colorData = new Color[texture.Width * texture.Height];
 			texture.GetData(colorData); // Map loader won't support sprites on texture atlas!!!
 			
-			TileMap = new bool[texture.Width, texture.Height];
+			TileMap = new int[texture.Width, texture.Height];
 
 			for(var y = 0; y < texture.Height; y += 1)
 			{
 				for(var x = 0; x < texture.Width; x += 1)
 				{
-					TileMap[x, y] = true;
+					TileMap[x, y] = 1;
 
 					var color = colorData[x + y * texture.Width];
 
@@ -49,7 +51,7 @@ namespace NoHands.Logic
 					}
 					if (CheckValue(_player, color))
 					{
-						new Character(new Vector2(x, y) * CellSize + Vector2.One * CellSize / 2);
+						new Player(new Vector2(x, y) * CellSize + Vector2.One * CellSize / 2);
 					}
 					if (CheckValue(_enemy, color))
 					{
@@ -57,13 +59,22 @@ namespace NoHands.Logic
 					}
 					if (CheckValue(_sky, color))
 					{
-						TileMap[x, y] = false;
+						TileMap[x, y] = 0;
+					}
+					if (CheckValue(_paintedTile, color))
+					{
+						TileMap[x, y] = 2;
 					}
 					if (CheckValue(_skyBorder, color))
 					{
 						new Solid(new Vector2(x, y) * CellSize, Vector2.One * CellSize);
-						TileMap[x, y] = false;
+						TileMap[x, y] = 1;
 					}
+					if (CheckValue(_npc, color))
+					{
+						new NPC(new Vector2(x, y) * CellSize + Vector2.One * CellSize / 2, color.B);
+					}
+				
 				}
 			}
 
@@ -123,9 +134,9 @@ namespace NoHands.Logic
 			{
 				for(var x = 0; x < TileMap.GetLength(0); x += 1)
 				{
-					if (TileMap[x, y])
+					if (TileMap[x, y] > 0)
 					{
-						DrawCntrl.DrawSprite(SpritesDefault.Tile, x * CellSize, y * CellSize);
+						DrawCntrl.DrawSprite(SpritesDefault.Tile, TileMap[x, y] - 1, x * CellSize, y * CellSize);
 					}
 				}
 			}
