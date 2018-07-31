@@ -11,12 +11,13 @@ namespace NoHands
 	class Test : GameObj 
 	{
 		Camera cam = new Camera(800, 600);
+		Scene scene;
 
 		public Test()
 		{
 			GameCntrl.MaxGameSpeed = 60;
 			
-			cam.BackgroundColor = new Color(64, 32, 32);
+			cam.BackgroundColor = Color.AliceBlue;
 			DrawCntrl.BlendState = BlendState.NonPremultiplied;
 
 			GameCntrl.WindowManager.CanvasSize = new Vector2(800, 600);
@@ -25,11 +26,9 @@ namespace NoHands
 			GameCntrl.WindowManager.CenterWindow();
 			GameCntrl.WindowManager.CanvasMode = CanvasMode.Fill;
 			
-			//new Character(new Vector2(0, 0));
-			
-			//new Enemy(new Vector2(200, 200));
+			cam.Offset = cam.Size / 2;
 
-			new Scene(SpritesDefault.TestMap);
+			scene = new Scene(SpritesDefault.TestMap);
 
 			Resources.Sounds.Load();
 
@@ -38,16 +37,13 @@ namespace NoHands
 		
 		public override void Update()
 		{
-			if (Input.CheckButton(Buttons.MouseLeft))
-			{
-				new Solid(Input.MousePos, new Vector2(48, 48));
-			}
 
 		}
 
 		
-		public override void Draw()
+		public override void DrawBegin()
 		{
+			scene.DrawTileMap();
 		}
 
 		public static Vector2 RoundVector2(Vector2 vec) =>

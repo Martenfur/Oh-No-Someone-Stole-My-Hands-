@@ -43,15 +43,20 @@ namespace NoHands.Logic
 		float _pursuingDelay = 1;
 
 
-		public Enemy(Vector2 pos)
+		public Enemy(Vector2 pos, List<Vector2> path)
 		{
 			Position = pos;
-		
+			_patrolPoints = path;
+
 			// Debug.
+			/*
 			_patrolPoints.Add(Position + new Vector2(100, 100));
 			_patrolPoints.Add(Position + new Vector2(100, -100));
 			_patrolPoints.Add(Position + new Vector2(-100, -100));
 			_patrolPoints.Add(Position + new Vector2(-100, 100));
+			*/
+			Console.WriteLine(path[0]);
+
 		}
 
 		public override void Update()
@@ -162,8 +167,7 @@ namespace NoHands.Logic
 					}
 				}
 			}
-
-
+			
 		}
 
 		
@@ -172,7 +176,7 @@ namespace NoHands.Logic
 			
 			DrawCntrl.CurrentColor = Color.Red;
 
-			if (CurrentState == State.Pursuing)
+			//if (CurrentState == State.Pursuing)
 				DrawCntrl.DrawCircle(Test.RoundVector2(Position), 8, false);
 			
 			foreach(Vector2 pt in _patrolPoints)

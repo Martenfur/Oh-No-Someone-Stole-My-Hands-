@@ -12,30 +12,25 @@ namespace NoHands.Logic
 	{
 		public Vector2 Position;
 		public Vector2 Size;
-		
+		public Sprite Sprite;
 
-		public Solid(Vector2 pos, Vector2 size)
+		public Solid(Vector2 pos, Vector2 size, Sprite sprite = null)
 		{
 			Position = pos;
 			Size = size;
-			
+			Sprite = sprite;
+
 			Depth = -(int)Position.Y;
 		}
-
-		public override void Update()
-		{
-			
-		}
-
 		
 		public override void Draw()
 		{
-			DrawCntrl.CurrentColor = Color.Black;
-			DrawCntrl.DrawRectangle(Position, Position + Size, false);
-			DrawCntrl.CurrentColor = Color.White;
+			if (Sprite != null)
+			{
+				DrawCntrl.CurrentColor = Color.Black;
+				DrawCntrl.DrawRectangle(Position, Position + Size, false);
+				DrawCntrl.CurrentColor = Color.White;
+			}
 		}
-		
-		
-
 	}
 }

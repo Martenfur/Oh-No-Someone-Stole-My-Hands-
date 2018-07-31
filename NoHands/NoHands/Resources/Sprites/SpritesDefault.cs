@@ -18,6 +18,7 @@ namespace Resources.Sprites
 	public static class SpritesDefault
 	{
 		#region Sprites.
+		public static Sprite Tile;
 		public static Sprite FoxBody;
 		public static Sprite FoxFace;
 		public static Sprite FoxPaw;
@@ -37,6 +38,7 @@ namespace Resources.Sprites
 			
 			#region Sprite constructors.
 			
+			Tile = sprites["tile"];
 			FoxBody = sprites["FoxBody"];
 			FoxFace = sprites["FoxFace"];
 			FoxPaw = sprites["FoxPaw"];

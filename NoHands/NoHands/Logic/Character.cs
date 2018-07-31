@@ -22,7 +22,7 @@ namespace NoHands.Logic
 
 		public Paw LeftPaw, RightPaw;
 
-		private int _pawRadius = 12;
+		private int _pawRadius = 14;
 
 		public double FacingDirection;
 
@@ -53,6 +53,9 @@ namespace NoHands.Logic
 			LeftPaw.Pair = RightPaw;
 			RightPaw.Pair = LeftPaw;
 			RightPaw.Inversion = -1;
+
+			var cam = new GameCamera();
+			cam.Viewer = this;
 		}
 
 		public override void Update()

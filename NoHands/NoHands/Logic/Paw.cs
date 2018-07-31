@@ -30,7 +30,7 @@ namespace NoHands.Logic
 		float _startingDistance;
 		double _stepAngle;
 		double _maxStepAngle = 45;
-		float _stepSpd = 270; // deg/s
+		float _stepSpd = 315; // deg/s
 
 		public int Inversion = 1; 
 
