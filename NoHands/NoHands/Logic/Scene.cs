@@ -27,7 +27,11 @@ namespace NoHands.Logic
 		byte[] _skyBorder = {32, 0};
 		byte[] _npc = {33, 255};
 		byte[] _paintedTile = {178, 0};
-		
+		byte[] _laser = {128, 128};
+		byte[] _checkpoint = {255, 216};
+
+		float _tileDeg;
+		float _tileAmpl = 2;
 
 		public Scene(Sprite map)
 		{
@@ -74,7 +78,17 @@ namespace NoHands.Logic
 					{
 						new NPC(new Vector2(x, y) * CellSize + Vector2.One * CellSize / 2, color.B);
 					}
-				
+					if (CheckValue(_laser, color))
+					{
+						new Laser(
+							new Vector2(x, y) * CellSize + Vector2.One * CellSize / 2, 
+							CreateLaserPath(x, y, colorData, texture.Width) * CellSize + Vector2.One * CellSize / 2
+						);
+					}
+					if (CheckValue(_checkpoint, color))
+					{
+						new Checkpoint(new Vector2(x, y) * CellSize + Vector2.One * CellSize / 2);
+					}
 				}
 			}
 
@@ -128,19 +142,69 @@ namespace NoHands.Logic
 			return path;
 		}
 
+		Vector2 CreateLaserPath(int x, int y, Color[] colorData, int texW)
+		{
+			var ptrVec = new Vector2(x, y);
+			var dirVec = Vector2.Zero;
+
+			foreach(Vector2 side in _rotation)
+			{
+				var v = ptrVec + side;
+
+				if (CheckValue(_enemyPath, colorData[(int)(v.X + v.Y * texW)]))
+				{
+					dirVec = side;
+					break;
+				}
+			}
+
+			if (dirVec == Vector2.Zero)
+			{
+				return ptrVec;
+			}
+
+			while(true)
+			{
+				var v = ptrVec + dirVec;
+
+				if (CheckValue(_enemyPath, colorData[(int)(v.X + v.Y * texW)]))
+				{
+					ptrVec = v;
+				}
+				else
+				{
+					break;
+				}
+			}
+
+			return ptrVec;
+		}
+
+
 		public void DrawTileMap()
 		{
+			_tileDeg += 0.1f;
+			if (_tileDeg > Math.PI * 2)
+			{
+				_tileDeg -= (float)Math.PI * 2;
+			}
+
+			DrawCntrl.CurrentColor = Color.White;
+
 			for(var y = 0; y < TileMap.GetLength(1); y += 1)
 			{
 				for(var x = 0; x < TileMap.GetLength(0); x += 1)
 				{
 					if (TileMap[x, y] > 0)
 					{
-						DrawCntrl.DrawSprite(SpritesDefault.Tile, TileMap[x, y] - 1, x * CellSize, y * CellSize);
+						DrawCntrl.DrawSprite(SpritesDefault.Tile, TileMap[x, y] - 1, x * CellSize, y * CellSize + GetLift(new Vector2(x, y) * CellSize));
 					}
 				}
 			}
 
 		}
+
+		public float GetLift(Vector2 pos) =>
+			0;//(float)Math.Sin(_tileDeg + (int)(pos.Y + pos.X) / CellSize) * _tileAmpl;
 	}
 }

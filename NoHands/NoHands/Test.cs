@@ -18,7 +18,7 @@ namespace NoHands
 			GameCntrl.MaxGameSpeed = 60;
 			DrawCntrl.Sampler = SamplerState.PointClamp;
 			
-			cam.BackgroundColor = Color.AliceBlue;
+			cam.BackgroundColor = new Color(142, 202, 255);
 			DrawCntrl.BlendState = BlendState.NonPremultiplied;
 
 

@@ -74,7 +74,10 @@ namespace NoHands.Logic
 		
 		public override void Draw()
 		{
-			DrawCntrl.DrawSprite(Sprite, Test.RoundVector2(Position - Vector2.UnitY * Z));
+			DrawCntrl.DrawSprite(
+				Sprite, 
+				Test.RoundVector2(Position - (Vector2.UnitY * Z) + (Vector2.UnitY * Test.CurrentScene.GetLift(Position)))
+			);
 		}
 
 		public void StartStep()

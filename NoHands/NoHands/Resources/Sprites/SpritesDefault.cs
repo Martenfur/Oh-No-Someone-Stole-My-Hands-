@@ -20,8 +20,12 @@ namespace Resources.Sprites
 		#region Sprites.
 		public static Sprite Tile;
 		public static Sprite FoxBody;
+		public static Sprite VillainBody;
+		public static Sprite VillainFace;
 		public static Sprite FoxFace;
+		public static Sprite EnemyPaw;
 		public static Sprite FoxPaw;
+		public static Sprite VillianPaw;
 		public static Sprite Pawprint;
 		public static Sprite TestMap;
 		#endregion Sprites.
@@ -41,8 +45,12 @@ namespace Resources.Sprites
 			
 			Tile = sprites["tile"];
 			FoxBody = sprites["FoxBody"];
+			VillainBody = sprites["VillainBody"];
+			VillainFace = sprites["VillainFace"];
 			FoxFace = sprites["FoxFace"];
+			EnemyPaw = sprites["EnemyPaw"];
 			FoxPaw = sprites["FoxPaw"];
+			VillianPaw = sprites["VillianPaw"];
 			Pawprint = sprites["pawprint"];
 			TestMap = sprites["Maps/TestMap"];
 			

@@ -17,23 +17,37 @@ namespace NoHands.Logic
 		Buttons _rightPawButton = Buttons.D;
 		Buttons _jumpButton = Buttons.Space;
 
+		public Vector2 CheckpointPos;
+
+		public bool ControlsEnabled = true;
+
+		bool _dead = false;
+		int _deathStage;
+		Alarm _deathAlarm = new Alarm();
+
+		bool _deathScrEnabled = false;
+
+		GameCamera _cam;
+
 		public Player(Vector2 pos) : base(pos, SpritesDefault.FoxBody, SpritesDefault.FoxFace)
 		{
-			var cam = new GameCamera();
-			cam.Viewer = this;
-			cam.Position = pos;
+			_cam = new GameCamera();
+			_cam.Viewer = this;
+			_cam.Position = pos;
+
+			CheckpointPos = pos;
 		}
 
 		public override void Update()
 		{
-			_chargingJump = Input.CheckButton(_jumpButton);
+			_chargingJump = Input.CheckButton(_jumpButton) && ControlsEnabled;
 
 			#region Movement controls.
 			if (Input.CheckButton(_leftPawButton))
 			{
 				LeftPaw.StartStep();
 			}
-			if (Input.CheckButtonRelease(_leftPawButton))
+			if (Input.CheckButtonRelease(_leftPawButton) || !ControlsEnabled)
 			{
 				LeftPaw.StopStep();
 			}
@@ -41,13 +55,74 @@ namespace NoHands.Logic
 			{
 				RightPaw.StartStep();
 			}
-			if (Input.CheckButtonRelease(_rightPawButton))
+			if (Input.CheckButtonRelease(_rightPawButton) || !ControlsEnabled)
 			{
 				RightPaw.StopStep();
 			}
 			#endregion Movement controls.
 
 			base.Update();
+
+
+			if (_dead)
+			{
+				_deathAlarm.Update();
+
+				if (_deathAlarm.Triggered)
+				{
+					if (_deathStage == 0)
+					{
+						_deathScrEnabled = true;
+						
+						LeftPaw.Position += CheckpointPos - Position;
+						RightPaw.Position += CheckpointPos - Position;
+						Position = CheckpointPos;
+						_cam.Position = Position;
+
+						_deathAlarm.Set(0.25);
+					}
+					if (_deathStage == 1)
+					{
+						_deathScrEnabled = false;
+						ControlsEnabled = true;
+						_dead = false;
+					}
+
+					_deathStage += 1;
+				}
+
+			}
+
+
+			foreach(Checkpoint checkpoint in Objects.GetList<Checkpoint>())
+			{
+				if (GameMath.Distance(Position, checkpoint.Position) < 32)
+				{
+					CheckpointPos = Position;
+				}
+			}
+
+		}
+
+		public override void DrawGUI()
+		{
+			if (_deathScrEnabled)
+			{
+				DrawCntrl.CurrentColor = Color.White;
+				DrawCntrl.DrawRectangle(Vector2.Zero, GameCntrl.WindowManager.CanvasSize, false);
+			}
+		}
+
+		public void Die()
+		{
+			if (!_dead)
+			{
+				_dead = true;
+				_deathStage = 0;
+				ControlsEnabled = false;
+				_deathAlarm.Set(0.5);
+				_jumpChargeReady = false;
+			}
 		}
 
 	}

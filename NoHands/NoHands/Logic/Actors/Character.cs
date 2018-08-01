@@ -28,13 +28,13 @@ namespace NoHands.Logic
 
 		Alarm _jumpCharge = new Alarm();
 		float _jumpChargeTime = 0.25f;
-		bool _jumpChargeReady = false;
+		protected bool _jumpChargeReady = false;
 		float _jumpChargeZ;
 		float _jumpChargeZMax = 4;
 
 		public float Z;
 		public float Zspd;
-		public float Gravity = 1000;
+		public float Gravity = 800;
 
 		public PawTrail PawTrail = new PawTrail();
 
@@ -76,7 +76,7 @@ namespace NoHands.Logic
 			{
 				if (_jumpChargeReady)
 				{
-					Zspd = 300;
+					Zspd = 320;
 				}
 				_jumpChargeReady = false;
 				_jumpCharge.Reset();
@@ -144,7 +144,7 @@ namespace NoHands.Logic
 			{
 				frame = 1;
 			}
-			DrawCntrl.DrawSprite(BodySprite, frame, Test.RoundVector2(resPos));
+			DrawCntrl.DrawSprite(BodySprite, frame, Test.RoundVector2(resPos + (Vector2.UnitY * Test.CurrentScene.GetLift(Position))));
 
 			if (frame == 0)
 			{
@@ -159,7 +159,14 @@ namespace NoHands.Logic
 					ratio = -1;
 				}
 
-				DrawCntrl.DrawSprite(FaceSprite, Test.RoundVector2(resPos + _facePos + Vector2.UnitX * _faceOffsetMax * ratio));
+				DrawCntrl.DrawSprite(
+					FaceSprite, 
+					Test.RoundVector2(
+						resPos + _facePos + 
+						(Vector2.UnitX * _faceOffsetMax * ratio) + 
+						(Vector2.UnitY * Test.CurrentScene.GetLift(Position))
+					)
+				);
 			}
 
 		}

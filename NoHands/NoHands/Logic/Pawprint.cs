@@ -31,10 +31,8 @@ namespace NoHands.Logic
 				Objects.Destroy(this);
 			}
 
-			
 			int x = (int)Position.X / Scene.CellSize;
 			int y = (int)Position.Y / Scene.CellSize;
-
 
 			if (Test.CurrentScene.TileMap[x, y] == 2)
 			{
@@ -43,12 +41,19 @@ namespace NoHands.Logic
 		}
 
 		
-		public override void Draw()
+		public override void DrawBegin()
 		{		
 			if (!Destroyed)
 			{
 				var c = new Color(Color.White, (float)_life.Counter / _lifetime);
-				DrawCntrl.DrawSprite(SpritesDefault.Pawprint, 0, Test.RoundVector2(Position), Vector2.One, -Dir, c);
+				DrawCntrl.DrawSprite(
+					SpritesDefault.Pawprint, 
+					0, 
+					Test.RoundVector2(Position + (Vector2.UnitY * Test.CurrentScene.GetLift(Position))), 
+					Vector2.One, 
+					-Dir, 
+					c
+				);
 			}
 		}
 	}

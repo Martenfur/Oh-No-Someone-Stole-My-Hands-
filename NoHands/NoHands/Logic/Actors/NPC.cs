@@ -13,7 +13,7 @@ namespace NoHands.Logic
 {
 	public class NPC : Character
 	{
-		public NPC(Vector2 pos, byte arg) : base(pos, SpritesDefault.FoxBody, SpritesDefault.FoxFace)
+		public NPC(Vector2 pos, byte arg) : base(pos, SpritesDefault.VillainBody, SpritesDefault.VillainFace)
 		{
 			new Solid(pos - Size / 2, Size);
 		}

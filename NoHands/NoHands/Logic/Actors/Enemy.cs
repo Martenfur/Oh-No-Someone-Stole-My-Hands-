@@ -160,9 +160,9 @@ namespace NoHands.Logic
 						CurrentState = State.Patroling;
 					}
 
-					if (GameMath.Distance(Position, player.Position) < _detectionRadius)
+					if (GameMath.Distance(Position, player.Position) < _detectionRadius * 3)
 					{
-						Console.WriteLine("KILLED!");
+						player.Die();
 
 						Position = _origPos;
 						CurrentState = State.Resting;
