@@ -49,6 +49,7 @@
     <Compile Include="Logic\Actors\Enemy.cs" />
     <Compile Include="Logic\Actors\Laser.cs" />
     <Compile Include="Logic\Actors\NPC.cs" />
+    <Compile Include="Logic\SpeechBubble.cs" />
     <Compile Include="Logic\GameCamera.cs" />
     <Compile Include="Logic\Paw.cs" />
     <Compile Include="Logic\Pawprint.cs" />

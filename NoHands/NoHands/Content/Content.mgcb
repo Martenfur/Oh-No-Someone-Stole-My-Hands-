@@ -44,3 +44,10 @@
 #begin Audio/Sounds/step.wav
 /copy:Audio/Sounds/step.wav
 
+#begin Fonts/CartonSix.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/CartonSix.spritefont
+

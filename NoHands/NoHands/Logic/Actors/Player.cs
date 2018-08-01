@@ -16,6 +16,8 @@ namespace NoHands.Logic
 		Buttons _leftPawButton = Buttons.A;
 		Buttons _rightPawButton = Buttons.D;
 		Buttons _jumpButton = Buttons.Space;
+		Buttons _previousLineButton = Buttons.P;
+
 
 		public Vector2 CheckpointPos;
 
@@ -29,6 +31,13 @@ namespace NoHands.Logic
 
 		GameCamera _cam;
 
+
+		public string[] Lines;
+		public int LinePtr = -1;
+		public bool Speaking = true;
+
+		SpeechBubble _bubble;
+
 		public Player(Vector2 pos) : base(pos, SpritesDefault.FoxBody, SpritesDefault.FoxFace)
 		{
 			_cam = new GameCamera();
@@ -36,6 +45,14 @@ namespace NoHands.Logic
 			_cam.Position = pos;
 
 			CheckpointPos = pos;
+
+			Lines = new string[]
+			{
+				"kek",
+				"kok", 
+				"kek kok maslena",
+				"))))))))))))))",
+			};
 		}
 
 		public override void Update()
@@ -99,6 +116,34 @@ namespace NoHands.Logic
 				if (GameMath.Distance(Position, checkpoint.Position) < 32)
 				{
 					CheckpointPos = Position;
+				}
+			}
+
+			if ((_bubble == null || _bubble.Destroyed) && Speaking)
+			{
+				LinePtr += 1;
+				if (LinePtr >= Lines.Length)
+				{
+					Speaking = false;
+				}
+				else
+				{
+					_bubble = new SpeechBubble(this, Lines[LinePtr]);
+				}
+			}
+
+			if (ControlsEnabled && Input.CheckButtonPress(_previousLineButton))
+			{
+				// Don't ask.
+				LinePtr -= 2;
+				Speaking = true;
+				if (LinePtr < -1)
+				{
+					LinePtr = -1;
+				}
+				if (_bubble != null)
+				{
+					Objects.Destroy(_bubble);
 				}
 			}
 
