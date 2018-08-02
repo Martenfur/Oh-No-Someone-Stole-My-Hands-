@@ -46,6 +46,7 @@
     <Compile Include="Logic\Actors\Actor.cs" />
     <Compile Include="Logic\Actors\Character.cs" />
     <Compile Include="Logic\Actors\Checkpoint.cs" />
+    <Compile Include="Logic\Actors\DialogueTrigger.cs" />
     <Compile Include="Logic\Actors\Enemy.cs" />
     <Compile Include="Logic\Actors\Laser.cs" />
     <Compile Include="Logic\Actors\NPC.cs" />

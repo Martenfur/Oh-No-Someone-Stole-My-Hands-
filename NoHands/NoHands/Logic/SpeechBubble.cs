@@ -60,7 +60,7 @@ namespace NoHands.Logic
 				{
 					_typeAlarm.Active = false;
 					TextPtr = Text.Length - 1;
-					_delayAlarm.Set(1 + Text.Length * 0.2);
+					_delayAlarm.Set(1 + Text.Length * 0.1);
 				}
 			}
 

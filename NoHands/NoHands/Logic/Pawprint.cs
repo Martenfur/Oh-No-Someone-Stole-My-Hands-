@@ -15,12 +15,15 @@ namespace NoHands.Logic
 		Alarm _life = new Alarm();
 		float _lifetime = 5;
 
-		float Dir;
+		public float Dir;
 
-		public Pawprint(Vector2 pos, float dir)
+		public Sprite Sprite;
+
+		public Pawprint(Vector2 pos, float dir, Sprite spr)
 		{
 			Position = pos;
 			Dir = dir;
+			Sprite = spr;
 			_life.Set(_lifetime);
 		}
 
@@ -47,7 +50,7 @@ namespace NoHands.Logic
 			{
 				var c = new Color(Color.White, (float)_life.Counter / _lifetime);
 				DrawCntrl.DrawSprite(
-					SpritesDefault.Pawprint, 
+					Sprite, 
 					0, 
 					Test.RoundVector2(Position + (Vector2.UnitY * Test.CurrentScene.GetLift(Position))), 
 					Vector2.One, 

@@ -16,6 +16,20 @@ namespace NoHands.Logic
 		public NPC(Vector2 pos, byte arg) : base(pos, SpritesDefault.VillainBody, SpritesDefault.VillainFace)
 		{
 			new Solid(pos - Size / 2, Size);
+
+			if (arg == 0)
+			{
+				LeftPaw.Sprite = SpritesDefault.VillainPaw;
+				RightPaw.Sprite = SpritesDefault.VillainPaw;
+			}
+			if (arg == 1)
+			{
+				BodySprite = SpritesDefault.MonkeyBody;
+				FaceSprite = SpritesDefault.MonkeyFace;
+				LeftPaw.Sprite = SpritesDefault.MonkeyPaw;
+				RightPaw.Sprite = SpritesDefault.MonkeyPaw;
+				FaceOffsetMax = 2;
+			}
 		}
 
 		public override void Update()

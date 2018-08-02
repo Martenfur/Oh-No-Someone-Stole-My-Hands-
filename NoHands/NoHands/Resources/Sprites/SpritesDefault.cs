@@ -21,12 +21,20 @@ namespace Resources.Sprites
 		public static Sprite Tile;
 		public static Sprite FoxBody;
 		public static Sprite VillainBody;
+		public static Sprite Block;
+		public static Sprite MonkeyBody;
+		public static Sprite Tree;
+		public static Sprite LaserOrb;
 		public static Sprite VillainFace;
+		public static Sprite FoxFaceSad;
 		public static Sprite FoxFace;
 		public static Sprite EnemyPaw;
 		public static Sprite FoxPaw;
-		public static Sprite VillianPaw;
+		public static Sprite MonkeyPaw;
+		public static Sprite VillainPaw;
 		public static Sprite Pawprint;
+		public static Sprite MonkeyFace;
+		public static Sprite Main;
 		public static Sprite TestMap;
 		#endregion Sprites.
 		
@@ -46,12 +54,20 @@ namespace Resources.Sprites
 			Tile = sprites["tile"];
 			FoxBody = sprites["FoxBody"];
 			VillainBody = sprites["VillainBody"];
+			Block = sprites["Block"];
+			MonkeyBody = sprites["MonkeyBody"];
+			Tree = sprites["tree"];
+			LaserOrb = sprites["LaserOrb"];
 			VillainFace = sprites["VillainFace"];
+			FoxFaceSad = sprites["FoxFaceSad"];
 			FoxFace = sprites["FoxFace"];
 			EnemyPaw = sprites["EnemyPaw"];
 			FoxPaw = sprites["FoxPaw"];
-			VillianPaw = sprites["VillianPaw"];
+			MonkeyPaw = sprites["MonkeyPaw"];
+			VillainPaw = sprites["VillainPaw"];
 			Pawprint = sprites["pawprint"];
+			MonkeyFace = sprites["MonkeyFace"];
+			Main = sprites["Maps/Main"];
 			TestMap = sprites["Maps/TestMap"];
 			
 			#endregion Sprite constructors.

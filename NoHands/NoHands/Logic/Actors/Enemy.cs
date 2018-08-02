@@ -75,7 +75,7 @@ namespace NoHands.Logic
 				if (_pawprint.Update())
 				{
 					var normVec = new Vector2(vec.Y * _inverse, -vec.X * _inverse) * _stepWidth;
-					PawTrail.AddPawprint(Position + normVec, (float)GameMath.Direction(vec));
+					PawTrail.AddPawprint(Position + normVec, (float)GameMath.Direction(vec), SpritesDefault.EnemyPaw);
 					_inverse *= -1;
 				}
 
@@ -160,7 +160,10 @@ namespace NoHands.Logic
 						CurrentState = State.Patroling;
 					}
 
-					if (GameMath.Distance(Position, player.Position) < _detectionRadius * 3)
+					int x = (int)player.Position.X / Scene.CellSize;
+					int y = (int)player.Position.Y / Scene.CellSize;
+
+					if (Test.CurrentScene.TileMap[x, y] != 2 && GameMath.Distance(Position, player.Position) < _detectionRadius * 2)
 					{
 						player.Die();
 
@@ -189,7 +192,8 @@ namespace NoHands.Logic
 			DrawCntrl.CurrentColor = Color.Red;
 
 			if (CurrentState == State.Pursuing)
-				DrawCntrl.DrawCircle(Test.RoundVector2(Position), 8, false);
+				DrawCntrl.DrawSprite(SpritesDefault.EnemyPaw, 0, Test.RoundVector2(Position), Vector2.One, -_tracedPawprint.Dir, Color.White);
+				//DrawCntrl.DrawCircle(Test.RoundVector2(Position), 8, false);
 			
 			/*
 			foreach(Vector2 pt in _patrolPoints)

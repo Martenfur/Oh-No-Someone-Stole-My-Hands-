@@ -36,7 +36,7 @@ namespace NoHands.Logic
 		public int LinePtr = -1;
 		public bool Speaking = true;
 
-		SpeechBubble _bubble;
+		public SpeechBubble Bubble;
 
 		public Player(Vector2 pos) : base(pos, SpritesDefault.FoxBody, SpritesDefault.FoxFace)
 		{
@@ -51,7 +51,6 @@ namespace NoHands.Logic
 				"kek",
 				"kok", 
 				"kek kok maslena",
-				"))))))))))))))",
 			};
 		}
 
@@ -81,6 +80,7 @@ namespace NoHands.Logic
 			base.Update();
 
 
+
 			if (_dead)
 			{
 				_deathAlarm.Update();
@@ -108,7 +108,13 @@ namespace NoHands.Logic
 					_deathStage += 1;
 				}
 
+				FaceSprite = SpritesDefault.FoxFaceSad;
 			}
+			else
+			{
+				FaceSprite = SpritesDefault.FoxFace;
+			}
+			
 
 
 			foreach(Checkpoint checkpoint in Objects.GetList<Checkpoint>())
@@ -119,7 +125,7 @@ namespace NoHands.Logic
 				}
 			}
 
-			if ((_bubble == null || _bubble.Destroyed) && Speaking)
+			if ((Bubble == null || Bubble.Destroyed) && Speaking)
 			{
 				LinePtr += 1;
 				if (LinePtr >= Lines.Length)
@@ -128,7 +134,7 @@ namespace NoHands.Logic
 				}
 				else
 				{
-					_bubble = new SpeechBubble(this, Lines[LinePtr]);
+					Bubble = new SpeechBubble(this, Lines[LinePtr]);
 				}
 			}
 
@@ -141,9 +147,9 @@ namespace NoHands.Logic
 				{
 					LinePtr = -1;
 				}
-				if (_bubble != null)
+				if (Bubble != null)
 				{
-					Objects.Destroy(_bubble);
+					Objects.Destroy(Bubble);
 				}
 			}
 

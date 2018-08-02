@@ -30,7 +30,7 @@ namespace NoHands
 			
 			cam.Offset = cam.Size / 2;
 
-			CurrentScene = new Scene(SpritesDefault.TestMap);
+			CurrentScene = new Scene(SpritesDefault.Main);
 
 			Resources.Sounds.Load();
 		}

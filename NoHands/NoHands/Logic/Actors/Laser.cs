@@ -27,12 +27,20 @@ namespace NoHands.Logic
 			Mask = SecondPosition;
 			if (Mask.X == 0)
 			{
+				Position.Y -= Scene.CellSize / 2 * Math.Sign(Mask.Y);
+				SecondPosition.Y += Scene.CellSize * Math.Sign(Mask.Y);
+				Mask = SecondPosition;
+
 				Mask.X = Width;
 				Mask.Y = Math.Abs(Mask.Y);
 				Dir = Vector2.UnitX;
 			}
 			else
 			{
+				Position.X -= Scene.CellSize / 2 * Math.Sign(Mask.X);
+				SecondPosition.X += Scene.CellSize * Math.Sign(Mask.X);
+				Mask = SecondPosition;
+
 				Mask.Y = Width;
 				Mask.X = Math.Abs(Mask.X);
 				Dir = Vector2.UnitY;
@@ -79,11 +87,8 @@ namespace NoHands.Logic
 			
 			DrawCntrl.DrawRectangle(center - Mask / 2, center + Mask / 2, false);
 			
-			DrawCntrl.CurrentColor = Color.Black;
-			DrawCntrl.DrawCircle(Position, 8, false);
-			DrawCntrl.DrawCircle(Position + SecondPosition, 8, false);
-
-			DrawCntrl.CurrentColor = Color.White;
+			DrawCntrl.DrawSprite(SpritesDefault.LaserOrb, Test.RoundVector2(Position));
+			DrawCntrl.DrawSprite(SpritesDefault.LaserOrb, Test.RoundVector2(Position + SecondPosition));
 		}
 
 

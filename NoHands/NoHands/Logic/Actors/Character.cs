@@ -17,14 +17,14 @@ namespace NoHands.Logic
 
 		public Sprite BodySprite, FaceSprite;
 
-		private int _pawRadius = 14;
+		public int PawRadius = 14;
 
 		public double FacingDirection;
 
 		Vector2 _facePos = new Vector2(0, -40);
 		Vector2 _bodyOffset = new Vector2(0, -12);
 
-		float _faceOffsetMax = 10;
+		public float FaceOffsetMax = 10;
 
 		Alarm _jumpCharge = new Alarm();
 		float _jumpChargeTime = 0.25f;
@@ -46,9 +46,9 @@ namespace NoHands.Logic
 			BodySprite = bodySprite;
 			FaceSprite = faceSprite;
 
-			LeftPaw = new Paw(Position - Vector2.UnitX * _pawRadius, this, SpritesDefault.FoxPaw);
+			LeftPaw = new Paw(Position - Vector2.UnitX * PawRadius, this, SpritesDefault.FoxPaw);
 			LeftPaw.ZRubberBand = 2;
-			RightPaw = new Paw(Position + Vector2.UnitX * _pawRadius, this, SpritesDefault.FoxPaw);
+			RightPaw = new Paw(Position + Vector2.UnitX * PawRadius, this, SpritesDefault.FoxPaw);
 			LeftPaw.Pair = RightPaw;
 			RightPaw.Pair = LeftPaw;
 			RightPaw.Inversion = -1;
@@ -163,7 +163,7 @@ namespace NoHands.Logic
 					FaceSprite, 
 					Test.RoundVector2(
 						resPos + _facePos + 
-						(Vector2.UnitX * _faceOffsetMax * ratio) + 
+						(Vector2.UnitX * FaceOffsetMax * ratio) + 
 						(Vector2.UnitY * Test.CurrentScene.GetLift(Position))
 					)
 				);
@@ -177,8 +177,8 @@ namespace NoHands.Logic
 			var vRot = new Vector2(-v.Y, v.X);
 			vRot.Normalize();
 
-			LeftPaw.Position = Position + vRot * _pawRadius;
-			RightPaw.Position = Position - vRot * _pawRadius;
+			LeftPaw.Position = Position + vRot * PawRadius;
+			RightPaw.Position = Position - vRot * PawRadius;
 		}
 
 

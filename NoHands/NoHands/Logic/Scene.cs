@@ -29,6 +29,9 @@ namespace NoHands.Logic
 		byte[] _paintedTile = {178, 0};
 		byte[] _laser = {128, 128};
 		byte[] _checkpoint = {255, 216};
+		byte[] _dialogue = {64, 64};
+		byte[] _tree = {33, 128};
+		
 
 		float _tileDeg;
 		float _tileAmpl = 2;
@@ -51,7 +54,11 @@ namespace NoHands.Logic
 
 					if (CheckValue(_wall, color))
 					{
-						new Solid(new Vector2(x, y) * CellSize, Vector2.One * CellSize, SpritesDefault.FoxBody);
+						new Solid(new Vector2(x, y) * CellSize, Vector2.One * CellSize, SpritesDefault.Block);
+					}
+					if (CheckValue(_tree, color))
+					{
+						new Solid(new Vector2(x, y) * CellSize, Vector2.One * CellSize, SpritesDefault.Tree);
 					}
 					if (CheckValue(_player, color))
 					{
@@ -88,6 +95,10 @@ namespace NoHands.Logic
 					if (CheckValue(_checkpoint, color))
 					{
 						new Checkpoint(new Vector2(x, y) * CellSize + Vector2.One * CellSize / 2);
+					}
+					if (CheckValue(_dialogue, color))
+					{
+						new DialogueTrigger(new Vector2(x, y) * CellSize + Vector2.One * CellSize / 2, color.B);
 					}
 				}
 			}

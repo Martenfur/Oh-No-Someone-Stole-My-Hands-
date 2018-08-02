@@ -26,9 +26,8 @@ namespace NoHands.Logic
 		{
 			if (Sprite != null)
 			{
-				DrawCntrl.CurrentColor = Color.Black;
-				DrawCntrl.DrawRectangle(Position, Position + Size, false);
 				DrawCntrl.CurrentColor = Color.White;
+				DrawCntrl.DrawSprite(Sprite, Position + Vector2.One * Scene.CellSize / 2);
 			}
 		}
 	}
