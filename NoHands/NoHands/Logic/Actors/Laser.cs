@@ -18,6 +18,8 @@ namespace NoHands.Logic
 		public const float Speed = 70;
 		public Vector2 Dir;
 
+		double _ang;
+		float amp = 2;
 
 		public Laser(Vector2 pos, Vector2 secondPos)
 		{
@@ -77,6 +79,12 @@ namespace NoHands.Logic
 				}
 			}
 
+			_ang += GameCntrl.Time(3);
+			if (_ang > Math.PI * 2)
+			{
+				_ang -= Math.PI * 2;
+			}
+
 			Depth = -(int)Position.Y + 1000;
 		}
 		
@@ -85,10 +93,12 @@ namespace NoHands.Logic
 			var center = Position + SecondPosition / 2;
 			DrawCntrl.CurrentColor = Color.White;
 			
+			var v = Vector2.UnitY * amp * (float)Math.Sin(_ang); 
+
 			DrawCntrl.DrawRectangle(center - Mask / 2, center + Mask / 2, false);
 			
-			DrawCntrl.DrawSprite(SpritesDefault.LaserOrb, Test.RoundVector2(Position));
-			DrawCntrl.DrawSprite(SpritesDefault.LaserOrb, Test.RoundVector2(Position + SecondPosition));
+			DrawCntrl.DrawSprite(SpritesDefault.LaserOrb, Test.RoundVector2(Position + v));
+			DrawCntrl.DrawSprite(SpritesDefault.LaserOrb, Test.RoundVector2(Position + SecondPosition + v));
 		}
 
 

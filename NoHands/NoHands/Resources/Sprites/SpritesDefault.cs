@@ -18,12 +18,14 @@ namespace Resources.Sprites
 	public static class SpritesDefault
 	{
 		#region Sprites.
+		public static Sprite Clouds;
 		public static Sprite Tile;
 		public static Sprite FoxBody;
 		public static Sprite VillainBody;
 		public static Sprite Block;
 		public static Sprite MonkeyBody;
 		public static Sprite Tree;
+		public static Sprite Coin;
 		public static Sprite LaserOrb;
 		public static Sprite VillainFace;
 		public static Sprite FoxFaceSad;
@@ -51,12 +53,14 @@ namespace Resources.Sprites
 			
 			#region Sprite constructors.
 			
+			Clouds = sprites["clouds"];
 			Tile = sprites["tile"];
 			FoxBody = sprites["FoxBody"];
 			VillainBody = sprites["VillainBody"];
 			Block = sprites["Block"];
 			MonkeyBody = sprites["MonkeyBody"];
 			Tree = sprites["tree"];
+			Coin = sprites["coin"];
 			LaserOrb = sprites["LaserOrb"];
 			VillainFace = sprites["VillainFace"];
 			FoxFaceSad = sprites["FoxFaceSad"];

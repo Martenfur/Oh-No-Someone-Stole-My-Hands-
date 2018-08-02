@@ -31,6 +31,7 @@ namespace NoHands.Logic
 		byte[] _checkpoint = {255, 216};
 		byte[] _dialogue = {64, 64};
 		byte[] _tree = {33, 128};
+		byte[] _coin = {85, 39};
 		
 
 		float _tileDeg;
@@ -99,6 +100,10 @@ namespace NoHands.Logic
 					if (CheckValue(_dialogue, color))
 					{
 						new DialogueTrigger(new Vector2(x, y) * CellSize + Vector2.One * CellSize / 2, color.B);
+					}
+					if (CheckValue(_coin, color))
+					{
+						new Coin(new Vector2(x, y) * CellSize);
 					}
 				}
 			}

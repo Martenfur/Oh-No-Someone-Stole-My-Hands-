@@ -17,16 +17,71 @@ namespace NoHands.Logic
 
 		SpeechBubble _bubble;
 
-		string[] _testDialogue = {
+		string[] _villainDialogue = {
 			"me",
-			"Hey.",
+			"hey.",
 			"other",
-			"Sup.",
-			"other",
-			"So, um, how are you today?",
+			"sup.",
 			"me",
-			"Ok, I guess.",
+			"are you the guy who stole my hands?",
+			"other",
+			"yep.",
+			"me",
+			"oh, cool.",
+			"me",
+			"can you please" + Environment.NewLine + "give them back?",
+			"other",
+			"yeah, sure.",
+			"me",
+			"thanks.",
+			"me",
+			"so, what are doing today?",
+			"other",
+			"nothing, really.",
+			"other",
+			"walking around, stealing hands.",
+			"other",
+			"you know.",
+			"me",
+			"wanna go play some videogames?",
+			"other",
+			"sure.",
+			"other",
+			"i've heard," + Environment.NewLine + "OH MY GOD, LOOK AT THIS KNIGHT" + Environment.NewLine + "has been released.",
+			"me",
+			"oh, really? i thought devs will never finish it.",
+			"other",
+			"yeah, me too.",
 		};
+
+		string[] _npcDialogue = {
+			"other",
+			"oh no, someone" + Environment.NewLine + "stole my hands!",
+			"other",
+			"is there a hero who" + Environment.NewLine + "will save us?",
+			"me",
+			"maybe, i dunno.",
+			"other",
+			"i also saw many traps" + Environment.NewLine + "villain left.",
+			"me",
+			"huh, this sounds like something" + Environment.NewLine + "straight out of a videogame.",
+		};
+
+		string[] _coinDialogue = {
+			"me",
+			"oh no.",
+			"me",
+			"there is a coin on the ground.",
+			"me",
+			"i bet someone forgot it here.",
+			"me",
+			"damn.",
+			"me",
+			"i'd better leave it right here.",
+			"me",
+			"i'm not a thief or something.",
+		};
+
 
 		string[] Lines;
 		int LinePtr = -1;
@@ -37,7 +92,19 @@ namespace NoHands.Logic
 		{
 			Position = pos;
 			_index = index;
-			Lines = _testDialogue;
+			if (index == 0)
+			{
+				Lines = _npcDialogue;
+			}
+			if (index == 1)
+			{
+				Lines = _coinDialogue;
+			}
+			if (index == 2)
+			{
+				Lines = _villainDialogue;
+			}
+
 		}
 		
 		public override void Update()
