@@ -77,7 +77,7 @@ namespace NoHands.Logic
 
 			var orig = Test.RoundVector2(Owner.Position + Offset);
 
-			DrawCntrl.CurrentColor = new Color(Color.White, 0.4f);
+			DrawCntrl.CurrentColor = new Color(Color.White, 0.5f);
 			DrawCntrl.CurrentFont = _font;
 			DrawCntrl.HorAlign = TextAlign.Center;
 			DrawCntrl.VerAlign = TextAlign.Center;

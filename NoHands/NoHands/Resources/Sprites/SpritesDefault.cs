@@ -22,6 +22,7 @@ namespace Resources.Sprites
 		public static Sprite Tile;
 		public static Sprite FoxBody;
 		public static Sprite VillainBody;
+		public static Sprite Sign;
 		public static Sprite Block;
 		public static Sprite MonkeyBody;
 		public static Sprite Tree;
@@ -57,6 +58,7 @@ namespace Resources.Sprites
 			Tile = sprites["tile"];
 			FoxBody = sprites["FoxBody"];
 			VillainBody = sprites["VillainBody"];
+			Sign = sprites["sign"];
 			Block = sprites["Block"];
 			MonkeyBody = sprites["MonkeyBody"];
 			Tree = sprites["tree"];

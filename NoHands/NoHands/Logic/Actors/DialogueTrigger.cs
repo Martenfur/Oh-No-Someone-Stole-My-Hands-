@@ -62,7 +62,7 @@ namespace NoHands.Logic
 			"me",
 			"maybe, i dunno.",
 			"other",
-			"i also saw many traps" + Environment.NewLine + "villain left.",
+			"i also saw many traps" + Environment.NewLine + "villain left. Be careful!",
 			"me",
 			"huh, this sounds like something" + Environment.NewLine + "straight out of a videogame.",
 		};
@@ -77,7 +77,7 @@ namespace NoHands.Logic
 			"me",
 			"damn.",
 			"me",
-			"i'd better leave it right here.",
+			"i'd better leave it.",
 			"me",
 			"i'm not a thief or something.",
 		};
@@ -150,6 +150,11 @@ namespace NoHands.Logic
 					Objects.Destroy(this);
 					player.ControlsEnabled = true;
 					player.Speaking = true;
+
+					if (Lines == _villainDialogue)
+					{
+						GameCntrl.ExitGame();
+					}
 				}
 				else
 				{

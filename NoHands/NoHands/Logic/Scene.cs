@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Monofoxe.Engine.Drawing;
 using Monofoxe.Engine;
 using Resources.Sprites;
+using Monofoxe.Utils;
 
 namespace NoHands.Logic
 {
@@ -106,6 +107,17 @@ namespace NoHands.Logic
 						new Coin(new Vector2(x, y) * CellSize);
 					}
 				}
+			}
+
+			var r = new RandomExt(42312342);
+
+			for(var i = 0; i < 50; i += 1)
+			{
+				new Cloud(
+					new Vector2(r.Next(-400, texture.Width * CellSize), r.Next(-400, texture.Height * CellSize)), 
+					r.Next(3), 
+					(float)r.NextDouble(0.3, 0.7)
+				);
 			}
 
 		}

@@ -14,12 +14,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Audio/Music/m_mission.ogg
-/copy:Audio/Music/m_mission.ogg
-
-#begin Audio/Music/m_peace.ogg
-/copy:Audio/Music/m_peace.ogg
-
 #begin Audio/Sounds/punch.wav
 /copy:Audio/Sounds/punch.wav
 
@@ -50,4 +44,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/CartonSix.spritefont
+
+#begin Audio/Music/ingame.ogg
+/copy:Audio/Music/ingame.ogg
 

@@ -28,7 +28,8 @@ namespace NoHands.Logic
 		public override void Draw()
 		{
 			DrawCntrl.CurrentColor = Color.White;
-			DrawCntrl.DrawCircle(Position, 16, false);
+			//DrawCntrl.DrawCircle(Position, 16, false);
+			DrawCntrl.DrawSprite(SpritesDefault.Sign, Position);
 		}
 	}
 }
