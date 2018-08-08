@@ -177,8 +177,8 @@ namespace NoHands.Logic
 			var vRot = new Vector2(-v.Y, v.X);
 			vRot.Normalize();
 
-			LeftPaw.Position = Position + vRot * PawRadius;
-			RightPaw.Position = Position - vRot * PawRadius;
+			//LeftPaw.Position = Position + vRot * PawRadius;
+			//RightPaw.Position = Position - vRot * PawRadius;
 		}
 
 
